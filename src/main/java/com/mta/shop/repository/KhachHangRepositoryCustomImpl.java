@@ -11,14 +11,14 @@ import java.util.Optional;
 public class KhachHangRepositoryCustomImpl implements KhachHangRepositoryCustom {
 
     @Autowired
-    private TaiKhoanService taiKhoanService;
+    private TaiKhoanRepository taiKhoanRepository;
 
     @Autowired
     private KhachHangRepository khachHangRepository;
 
     @Override
     public KhachHangEntity getKhachHang(String tenDangNhap) {
-        Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanService.findByTenDangNhap(tenDangNhap);
+        Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanRepository.findByTenDangNhap(tenDangNhap);
 
         if (!taiKhoanEntity.isPresent()){
             return  null;

@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 
 //@Service
 @Repository
-public class TaiKhoanServiceCustomImpl implements TaiKhoanServiceCustom{
+public class TaiKhoanRepositoryCustomImpl implements TaiKhoanRepositoryCustom {
     @Autowired
-    private TaiKhoanService taiKhoanService;
+    private TaiKhoanRepository taiKhoanRepository;
 
     @Autowired
     private KhachHangRepository khachHangRepository;
@@ -19,7 +19,7 @@ public class TaiKhoanServiceCustomImpl implements TaiKhoanServiceCustom{
     @Transactional
     public TaiKhoanEntity addCustomer(TaiKhoanEntity taiKhoanEntity){
         System.out.println("đii vào 1");
-        TaiKhoanEntity entity = taiKhoanService.save(taiKhoanEntity);
+        TaiKhoanEntity entity = taiKhoanRepository.save(taiKhoanEntity);
         if (null != entity){
             KhachHangEntity khachHangEntity = new KhachHangEntity();
             khachHangEntity.setMaKhachHang("KH" + entity.getId());
@@ -33,7 +33,7 @@ public class TaiKhoanServiceCustomImpl implements TaiKhoanServiceCustom{
     @Transactional
     public TaiKhoanEntity addEmployee(TaiKhoanEntity taiKhoanEntity){
         System.out.println("đii vào 2");
-        TaiKhoanEntity entity = taiKhoanService.save(taiKhoanEntity);
+        TaiKhoanEntity entity = taiKhoanRepository.save(taiKhoanEntity);
         if (null != entity){
             KhachHangEntity khachHangEntity = new KhachHangEntity();
             khachHangEntity.setMaKhachHang("KH" + entity.getId());
