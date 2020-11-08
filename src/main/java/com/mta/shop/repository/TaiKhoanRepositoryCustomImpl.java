@@ -23,7 +23,7 @@ public class TaiKhoanRepositoryCustomImpl implements TaiKhoanRepositoryCustom {
         if (null != entity){
             KhachHangEntity khachHangEntity = new KhachHangEntity();
             khachHangEntity.setMaKhachHang("KH" + entity.getId());
-            khachHangEntity.setIdTaiKhoan(entity.getId());
+//            khachHangEntity.setIdTaiKhoan(entity.getId());
 
             khachHangRepository.save(khachHangEntity);
         }
@@ -37,7 +37,7 @@ public class TaiKhoanRepositoryCustomImpl implements TaiKhoanRepositoryCustom {
         if (null != entity){
             KhachHangEntity khachHangEntity = new KhachHangEntity();
             khachHangEntity.setMaKhachHang("KH" + entity.getId());
-            khachHangEntity.setIdTaiKhoan(entity.getId());
+//            khachHangEntity.setIdTaiKhoan(entity.getId());
 
             khachHangEntity = khachHangRepository.save(khachHangEntity);
         }

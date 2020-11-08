@@ -1,11 +1,15 @@
 package com.mta.shop.service.mapper;
 
 import com.mta.shop.entities.KhachHangEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class KhachHangDTO {
     private int id;
     private String maKhachHang;

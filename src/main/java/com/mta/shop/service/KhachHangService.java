@@ -3,6 +3,7 @@ package com.mta.shop.service;
 import com.mta.shop.configure.Constant;
 import com.mta.shop.controllers.message.UpdateInformationCustomerRequest;
 import com.mta.shop.entities.KhachHangEntity;
+import com.mta.shop.entities.NhanVienEntity;
 import com.mta.shop.repository.KhachHangRepository;
 import com.mta.shop.repository.KhachHangRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,9 @@ public class KhachHangService {
     KhachHangRepositoryCustom khachHangRepositoryCustom;
 
     public KhachHangEntity updateCustomer(UpdateInformationCustomerRequest request, boolean theSamePath) {
-        KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(request.getIdTaiKhoan());
+         KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(request.getIdTaiKhoan());
+
+//        KhachHangEntity khachHangEntity = null; // fixx tạm
 
         khachHangEntity.setMaKhachHang(request.getMaKhachHang());
         khachHangEntity.setDiaChi(request.getDiaChi());
@@ -110,6 +113,14 @@ public class KhachHangService {
         }
 
         System.out.println("pass delete file if trùng");
+    }
+
+    public KhachHangEntity saveOne(KhachHangEntity khachHangEntity){
+        return khachHangRepository.save(khachHangEntity);
+    }
+
+    public KhachHangEntity findByIdTaiKhoan(Integer id){
+        return khachHangRepository.findByIdTaiKhoan(id);
     }
 
 }

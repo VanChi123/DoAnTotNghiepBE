@@ -4,6 +4,7 @@ import com.mta.shop.controllers.message.AppResponse;
 import com.mta.shop.controllers.message.AppResponseFailure;
 import com.mta.shop.controllers.message.AppResponseSuccess;
 import com.mta.shop.controllers.message.ProductPaging;
+import com.mta.shop.entities.LoaiSanPham;
 import com.mta.shop.entities.SanPhamEntity;
 import com.mta.shop.repository.SanPhamRepositoryCustomImp;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final SanPhamRepositoryCustomImp sanPhamRepositoryCustomImp;
-    @GetMapping(value = "/")
+    @GetMapping(value = "/get-all")
     public List<SanPhamEntity> getProductAll() {
         return sanPhamRepositoryCustomImp.findAllLoaiSanPham();
+    }
+
+    @GetMapping(value = "/get-one")
+    public SanPhamEntity getProductOne() {
+        return sanPhamRepositoryCustomImp.findProductByMaSanPham("SP01");
+    }
+
+    @GetMapping(value = "/get-one-cat")
+    public LoaiSanPham getProductOneCat() {
+        return sanPhamRepositoryCustomImp.findProductByMaSanPham("SP01").getLoaiSanPham();
     }
 
     @PostMapping(value = "/")

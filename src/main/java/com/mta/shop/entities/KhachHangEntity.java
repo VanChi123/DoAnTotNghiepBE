@@ -1,110 +1,53 @@
 package com.mta.shop.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
-@Entity
+@Entity // Đánh dấu đây là table trong db
+@Data // lombok giúp generate các hàm constructor, get, set v.v.
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "KHACHHANG")
 public class KhachHangEntity {
-    private int id;
-    private String maKhachHang;
-    private String tenKhachHang;
-    private Date ngaySinh;
-    private Boolean gioiTinh;
-    private String diaChi;
-    private String soDienThoai;
-    private int idTaiKhoan;
-    private String img;
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "ID")
-    public int getId() {
-        return id;
-    }
+    private Integer id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
     @Column(name = "MAKHACHHANG")
-    public String getMaKhachHang() {
-        return maKhachHang;
-    }
+    private String maKhachHang;
 
-    public void setMaKhachHang(String maKhachHang) {
-        this.maKhachHang = maKhachHang;
-    }
 
-    @Basic
     @Column(name = "TENKHACHHANG")
-    public String getTenKhachHang() {
-        return tenKhachHang;
-    }
+    private String tenKhachHang;
 
-    public void setTenKhachHang(String tenKhachHang) {
-        this.tenKhachHang = tenKhachHang;
-    }
 
-    @Basic
     @Column(name = "NGAYSINH")
-    public Date getNgaySinh() {
-        return ngaySinh;
-    }
+    private Date ngaySinh;
 
-    public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
 
-    @Basic
     @Column(name = "GIOITINH")
-    public Boolean getGioiTinh() {
-        return gioiTinh;
-    }
+    private Boolean gioiTinh;
 
-    public void setGioiTinh(Boolean gioiTinh) {
-        this.gioiTinh = gioiTinh;
-    }
 
-    @Basic
     @Column(name = "DIACHI")
-    public String getDiaChi() {
-        return diaChi;
-    }
+    private String diaChi;
 
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
-    @Basic
     @Column(name = "SODIENTHOAI")
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
+    private String soDienThoai;
 
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    @Basic
-    @Column(name = "IDTAIKHOAN")
-    public int getIdTaiKhoan() {
-        return idTaiKhoan;
-    }
-
-    public void setIdTaiKhoan(int idTaiKhoan) {
-        this.idTaiKhoan = idTaiKhoan;
-    }
-
-    @Basic
     @Column(name = "IMG")
-    public String getImg() {
-        return img;
-    }
+    private String img;
 
-    public void setImg(String img) {
-        this.img = img;
-    }
+    @Column(name = "IDTAIKHOAN")
+    private Integer idTaiKhoan;;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "IDTAIKHOAN", referencedColumnName = "ID")
+//    private TaiKhoanEntity taiKhoanEntity;
 }

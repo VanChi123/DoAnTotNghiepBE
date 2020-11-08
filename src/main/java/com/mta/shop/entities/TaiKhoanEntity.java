@@ -1,59 +1,33 @@
 package com.mta.shop.entities;
 
-import javax.persistence.*;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
-@Entity
+import javax.persistence.*;
+import java.util.*;
+
+@Entity // Đánh dấu đây là table trong db
+@Data // lombok giúp generate các hàm constructor, get, set v.v.
+@AllArgsConstructor
 @Table(name = "TAIKHOAN")
 public class TaiKhoanEntity {
-    private int id;
-    private String tenDangNhap;
-    private String matKhau;
-    private String email;
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "ID")
-    public int getId() {
-        return id;
-    }
+    private int id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
     @Column(name = "TENDANGNHAP")
-    public String getTenDangNhap() {
-        return tenDangNhap;
-    }
+    private String tenDangNhap;
 
-    public void setTenDangNhap(String tenDangNhap) {
-        this.tenDangNhap = tenDangNhap;
-    }
-
-    @Basic
     @Column(name = "MATKHAU")
-    public String getMatKhau() {
-        return matKhau;
-    }
+    private String matKhau;
 
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
-    @Basic
     @Column(name = "EMAIL")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String email;
 
     public TaiKhoanEntity(){
-
     }
 
     public TaiKhoanEntity( String tenDangNhap,  String matKhau,  String email){
@@ -62,19 +36,55 @@ public class TaiKhoanEntity {
         this.email = email;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaiKhoanEntity that = (TaiKhoanEntity) o;
-        return id == that.id &&
-                Objects.equals(tenDangNhap, that.tenDangNhap) &&
-                Objects.equals(matKhau, that.matKhau) &&
-                Objects.equals(email, that.email);
-    }
+//    @Getter
+//    @Setter
+//    @ManyToMany
+//            // @Transient
+//    Set<QuyenSuDungEntity> quyenSuDungEntitySet = new HashSet<QuyenSuDungEntity>();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tenDangNhap, matKhau, email);
-    }
+//    @ManyToMany
+//    @JoinTable(
+//            name = "PHANQUYEN",
+//            joinColumns = {@JoinColumn(name = "IDTAIKHOAN")},
+//            inverseJoinColumns = {@JoinColumn(name = "IDQUYEN")})
+
+
+//    @JoinTable(name = "PHANQUYEN",
+//            joinColumns = { @JoinColumn(name = "IDTAIKHOAN") },
+//            inverseJoinColumns = {@JoinColumn(name = "IDQUYEN") })
+
+//    @Getter
+//    @Setter
+//    @ElementCollection
+
+//    @Getter
+//    @Setter
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "taiKhoanEntity", fetch = FetchType.LAZY)
+//    @JsonManagedReference
+//    private List<PhanQuyenEntity> phanQuyenEntities =new ArrayList<>();
+
+
+//    Set<QuyenSuDungEntity> quyenSuDungEntitySet = new HashSet<>();
+
+//    public Set<QuyenSuDungEntity> getQuyenSuDungEntitySet() {
+//        return quyenSuDungEntitySet;
+//    }
+//
+//    public void setQuyenSuDungEntitySet(Set<QuyenSuDungEntity> quyenSuDungEntitySet) {
+//        this.quyenSuDungEntitySet = quyenSuDungEntitySet;
+//    }
+
+
+    @ManyToMany
+        @JoinTable(
+            name = "PHANQUYEN",
+            joinColumns = {@JoinColumn(name = "IDTAIKHOAN")},
+            inverseJoinColumns = {@JoinColumn(name = "IDQUYEN")})
+    // @JsonBackReference
+    private Collection<QuyenSuDungEntity> quyenSuDungEntities;
+
+//    @OneToOne(mappedBy = "taiKhoanEntity")
+//    private KhachHangEntity khachHangEntity;
+
 }
