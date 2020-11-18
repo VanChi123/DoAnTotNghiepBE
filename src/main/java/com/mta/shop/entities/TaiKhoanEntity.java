@@ -87,4 +87,9 @@ public class TaiKhoanEntity {
 //    @OneToOne(mappedBy = "taiKhoanEntity")
 //    private KhachHangEntity khachHangEntity;
 
+
+    @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @JsonBackReference
+    private Collection<BinhLuan> binhLuans;
+
 }

@@ -22,7 +22,7 @@ public class SanPhamRepositoryCustomImp {
         return sanPhamRepository.findAll();
     }
 
-    // lấy danh sách sản phẩm
+    // lấy danh sách sản phẩm paging
     public Page<SanPhamEntity> findProductsPaging(int pageNumber, int pageSize){
         Pageable paging = PageRequest.of(pageNumber, pageSize);
         Page<SanPhamEntity> pagedResult = sanPhamRepository.findAll(paging);

@@ -40,17 +40,4 @@ public class ImagesEntity {
         this.idSanPham = idSanPham;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImagesEntity that = (ImagesEntity) o;
-        return id == that.id &&
-                Objects.equals(tenAnh, that.tenAnh);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tenAnh);
-    }
 }

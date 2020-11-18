@@ -11,14 +11,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KhachHangDTO {
-    private int id;
+    private Integer id;
     private String maKhachHang;
     private String tenKhachHang;
     private Date ngaySinh;
-    private boolean gioiTinh;
+    private Boolean gioiTinh;
     private String diaChi;
     private String soDienThoai;
-    private int idTaiKhoan;
+    private Integer idTaiKhoan;
     private String img;
 
     private String imgBase64;

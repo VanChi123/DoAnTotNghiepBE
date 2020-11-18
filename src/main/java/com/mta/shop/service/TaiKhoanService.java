@@ -186,6 +186,18 @@ public class TaiKhoanService {
 
     //ok: lấy tất cả các tài khoản theo phân trang
     public Page<TaiKhoanEntity> getAllAccount(GetAccountListRequest request){
+//        List<Integer> roleIdList = new ArrayList<>();
+//        if (null == request.getQuyenSuDung() || request.getQuyenSuDung().size() <1){
+//            roleIdList.add(1);
+//            roleIdList.add(2);
+//            roleIdList.add(3);
+//        }else {
+//
+//            roleIdList = request.getQuyenSuDung();
+//        }
+
+//        List<QuyenSuDungEntity> q = new ArrayList<>();
+//        q = quyenSuDungService.findAll();
         return taiKhoanRepository.searchAllAccount(PageRequest.of(request.getPageNumber(),request.getPageSize()), request.getTenDangNhap(), request.getEmail());
     }
 }

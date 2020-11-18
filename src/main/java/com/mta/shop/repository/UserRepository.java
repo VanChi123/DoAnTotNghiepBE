@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<TaiKhoanEntity, Integer> {
     @Query("from TaiKhoanEntity tk where tk.tenDangNhap = :tenDangNhap and tk.matKhau = :matKhau")
-    Optional<TaiKhoanEntity> findByTenDangNhapAndMatKhau(@Param("tenDangNhap") String tenDangNhap, @Param("matKhau") String matKhau);
+    Optional<TaiKhoanEntity> findByTenDangNhapAndMatKhau(@Param("tenDangNhap") String tenDangNhap,
+                                                         @Param("matKhau") String matKhau);
 }

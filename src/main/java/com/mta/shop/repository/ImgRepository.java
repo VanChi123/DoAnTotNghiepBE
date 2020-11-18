@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ImgRepository extends JpaRepository<ImagesEntity, Integer> {
-    public List<ImagesEntity> getAllByIdSanPham(int idSanPham);
+    List<ImagesEntity> getAllByIdSanPham(Integer idSanPham);
 }

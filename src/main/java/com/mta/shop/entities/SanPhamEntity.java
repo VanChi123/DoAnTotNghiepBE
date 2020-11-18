@@ -1,18 +1,15 @@
 package com.mta.shop.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.util.Objects;
+import java.util.Collection;
+import java.util.Date;
 
 @Table(name = "SANPHAM")
 @Entity // Đánh dấu đây là table trong db
-@Data // lombok giúp generate các hàm constructor, get, set v.v.
+@Data //get, set, toString v.v.
 @AllArgsConstructor
 @NoArgsConstructor
 public class SanPhamEntity {
@@ -36,9 +33,9 @@ public class SanPhamEntity {
 //    private Date ngayCapNhap;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
     @Column(name = "MASANPHAM")
     private String maSanPham;
@@ -47,137 +44,55 @@ public class SanPhamEntity {
     private String tenSanPham;
 
     @Column(name = "GIA")
-    private float gia;
+    private Float gia;
 
     @Column(name = "DOITUONGSUDUNG")
     private String doiTuongSuDung;
 
     @Column(name = "KICHTHUOCBEMAT")
-    private float kichThuocBeMat;
+    private Float kichThuocBeMat;
 
 //    @Column(name = "IDLOAISANPHAM")
 //    private int idLoaiSanPham;
 
-//    @Basic
-//    @Column(name = "CHATLIEUMATKINH")
-//    public String getChatLieuMatKinh() {
-//        return chatLieuMatKinh;
-//    }
-//
-//    public void setChatLieuMatKinh(String chatLieuMatKinh) {
-//        this.chatLieuMatKinh = chatLieuMatKinh;
-//    }
-//
-//    @Basic
-//    @Column(name = "CHATLIEUDAY")
-//    public String getChatLieuDay() {
-//        return chatLieuDay;
-//    }
-//
-//    public void setChatLieuDay(String chatLieuDay) {
-//        this.chatLieuDay = chatLieuDay;
-//    }
-//
-//    @Basic
-//    @Column(name = "DODAY")
-//    public BigDecimal getDoDay() {
-//        return doDay;
-//    }
-//
-//    public void setDoDay(BigDecimal doDay) {
-//        this.doDay = doDay;
-//    }
-//
-//    @Basic
-//    @Column(name = "DODAI")
-//    public BigDecimal getDoDai() {
-//        return doDai;
-//    }
-//
-//    public void setDoDai(BigDecimal doDai) {
-//        this.doDai = doDai;
-//    }
-//
-//    @Basic
-//    @Column(name = "DORONGCUADAY")
-//    public BigDecimal getDoRongCuaDay() {
-//        return doRongCuaDay;
-//    }
-//
-//    public void setDoRongCuaDay(BigDecimal doRongCuaDay) {
-//        this.doRongCuaDay = doRongCuaDay;
-//    }
-//
-//    @Basic
-//    @Column(name = "KIEUKHOA")
-//    public String getKieuKhoa() {
-//        return kieuKhoa;
-//    }
-//
-//    public void setKieuKhoa(String kieuKhoa) {
-//        this.kieuKhoa = kieuKhoa;
-//    }
-//
-//    @Basic
-//    @Column(name = "CHATLIEUVOMAY")
-//    public String getChatLieuVoMay() {
-//        return chatLieuVoMay;
-//    }
-//
-//    public void setChatLieuVoMay(String chatLieuVoMay) {
-//        this.chatLieuVoMay = chatLieuVoMay;
-//    }
-//
-//    @Basic
-//    @Column(name = "MAY")
-//    public String getMay() {
-//        return may;
-//    }
-//
-//    public void setMay(String may) {
-//        this.may = may;
-//    }
-//
-//    @Basic
-//    @Column(name = "KHANANGCHIUNUOC")
-//    public String getKhaNangChiuNuoc() {
-//        return khaNangChiuNuoc;
-//    }
-//
-//    public void setKhaNangChiuNuoc(String khaNangChiuNuoc) {
-//        this.khaNangChiuNuoc = khaNangChiuNuoc;
-//    }
-//
-//    @Basic
-//    @Column(name = "GIAMGIA")
-//    public Integer getGiamGia() {
-//        return giamGia;
-//    }
-//
-//    public void setGiamGia(Integer giamGia) {
-//        this.giamGia = giamGia;
-//    }
-//
-//    @Basic
-//    @Column(name = "IMG")
-//    public String getImg() {
-//        return img;
-//    }
-//
-//    public void setImg(String img) {
-//        this.img = img;
-//    }
-//
-//    @Basic
-//    @Column(name = "NGAYCAPNHAP")
-//    public Date getNgayCapNhap() {
-//        return ngayCapNhap;
-//    }
-//
-//    public void setNgayCapNhap(Date ngayCapNhap) {
-//        this.ngayCapNhap = ngayCapNhap;
-//    }
-//
+
+    @Column(name = "CHATLIEUMATKINH")
+    private String chatLieuMatKinh;
+
+
+    @Column(name = "CHATLIEUDAY")
+    private String chatLieuDay;
+
+    @Column(name = "DODAY")
+    private Float doDay;
+
+    @Column(name = "DODAI")
+    private Float doDai;
+
+    @Column(name = "DORONGCUADAY")
+    private Float doRongCuaDay;
+
+    @Column(name = "KIEUKHOA")
+    private String kieuKhoa;
+
+    @Column(name = "CHATLIEUVOMAY")
+    private String chatLieuVoMay;
+
+    @Column(name = "MAY")
+    private String may;
+
+    @Column(name = "KHANANGCHIUNUOC")
+    private String khaNangChiuNuoc;
+
+    @Column(name = "GIAMGIA")
+    private Integer giamGia;
+
+    @Column(name = "IMG")
+    private String img;
+
+    @Column(name = "NGAYCAPNHAP")
+    private Date ngayCapNhap;
+
 //    public LoaiSanPham getLoaiSanPham() {
 //        return loaiSanPham;
 //    }
@@ -195,7 +110,7 @@ public class SanPhamEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "IDLOAISANPHAM", insertable = false,updatable = false)
+    @JoinColumn(name = "IDLOAISANPHAM", insertable = true, updatable = false)
 //    @EqualsAndHashCode.Exclude
 //    @ToString.Exclude
 //    @JsonBackReference
@@ -205,4 +120,38 @@ public class SanPhamEntity {
 //    @JsonManagedReference
     private LoaiSanPham loaiSanPham;
 
+    @ManyToOne
+    @JoinColumn(name = "IDTHUONGHIEU", insertable = true, updatable = true) // phải set thằng này ko update hay thêm mới nó ko sét giá trị cho đâu
+    private ThuongHieuEntity thuongHieuEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "IDSTAR", insertable = true, updatable = true) // phải set thằng này ko update hay thêm mới nó ko sét giá trị cho đâu
+    private Star star;
+
+    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    private Collection<BinhLuan> binhLuans;
+
+    @Override
+    public String toString() {
+        return "SanPhamEntity{" +
+                "id=" + id +
+                ", maSanPham='" + maSanPham + '\'' +
+                ", tenSanPham='" + tenSanPham + '\'' +
+                ", gia=" + gia +
+                ", doiTuongSuDung='" + doiTuongSuDung + '\'' +
+                ", kichThuocBeMat=" + kichThuocBeMat +
+                ", chatLieuMatKinh='" + chatLieuMatKinh + '\'' +
+                ", chatLieuDay='" + chatLieuDay + '\'' +
+                ", doDay=" + doDay +
+                ", doDai=" + doDai +
+                ", doRongCuaDay=" + doRongCuaDay +
+                ", kieuKhoa='" + kieuKhoa + '\'' +
+                ", chatLieuVoMay='" + chatLieuVoMay + '\'' +
+                ", may='" + may + '\'' +
+                ", khaNangChiuNuoc='" + khaNangChiuNuoc + '\'' +
+                ", giamGia=" + giamGia +
+                ", img='" + img + '\'' +
+                ", ngayCapNhap=" + ngayCapNhap +
+                '}';
+    }
 }

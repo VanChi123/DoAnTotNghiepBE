@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryCustomImpl implements UserRepositoryCustom{
+
     private final UserRepository userRepository;
 
 //    @Autowired
@@ -31,7 +32,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
 
     public TaiKhoanEntity checkLogin(String userName, String password) {
         Optional<TaiKhoanEntity> taiKhoanEntity = userRepository.findByTenDangNhapAndMatKhau(userName, password);
-        return taiKhoanEntity.isPresent() ? taiKhoanEntity.get() : null;
+        return taiKhoanEntity.orElse(null);
     }
 
     public GetOTPResponse generateOtp(GetOTPRequest request, String purpose) throws ServiceException, MessagingException {

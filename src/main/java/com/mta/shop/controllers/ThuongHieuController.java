@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -16,6 +17,16 @@ import javax.mail.MessagingException;
 @RequiredArgsConstructor
 public class ThuongHieuController {
     private final ThuongHieuService thuongHieuService;
+
+    // thêm mới thương hiệu
+    @GetMapping("/")
+    public AppResponse getAll() {
+        List<ThuongHieuEntity> thuongHieuEntityList = thuongHieuService.getAll();
+
+        AppResponse appResponse = new AppResponseSuccess();
+        appResponse.setData(thuongHieuEntityList);
+        return appResponse;
+    }
 
     // thêm mới thương hiệu
     @PostMapping("/add")
@@ -27,4 +38,6 @@ public class ThuongHieuController {
         appResponse.setData(thuongHieuEntity);
         return appResponse;
     }
+
+
 }

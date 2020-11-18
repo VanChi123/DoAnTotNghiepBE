@@ -3,6 +3,7 @@ package com.mta.shop.controllers;
 import com.mta.shop.controllers.message.*;
 import com.mta.shop.entities.TaiKhoanEntity;
 import com.mta.shop.repository.UserRepositoryCustomImpl;
+import com.mta.shop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +14,11 @@ import javax.mail.MessagingException;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserRepositoryCustomImpl userService;
+    //private final UserRepositoryCustomImpl userService;
 
+    private final UserService userService;
+
+    // ok: đăng nhập
     @PostMapping(value = "/login")
     public AppResponse login(@RequestBody LoginRequest loginRequest) {
         AppResponse appResponse;

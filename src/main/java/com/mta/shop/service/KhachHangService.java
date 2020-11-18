@@ -6,6 +6,7 @@ import com.mta.shop.entities.KhachHangEntity;
 import com.mta.shop.entities.NhanVienEntity;
 import com.mta.shop.repository.KhachHangRepository;
 import com.mta.shop.repository.KhachHangRepositoryCustom;
+import com.mta.shop.service.utils.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +22,29 @@ import org.apache.commons.io.FilenameUtils;
 @Service
 public class KhachHangService {
     @Autowired
+    private FileService fileService;
+
+    @Autowired
     private KhachHangRepository khachHangRepository;
 
     @Autowired
     KhachHangRepositoryCustom khachHangRepositoryCustom;
 
-    public KhachHangEntity updateCustomer(UpdateInformationCustomerRequest request, boolean theSamePath) {
-         KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(request.getIdTaiKhoan());
+    public KhachHangEntity updateCustomer(UpdateInformationCustomerRequest request) throws IOException {
+        // file upleen có trùng với file gốc ?
+        boolean theSamePath = false;
 
-//        KhachHangEntity khachHangEntity = null; // fixx tạm
+        // Save url to database
+        String filePath = fileService.saveFile(request.getImgBase64(), request.getImg(), request.getFileTail());
+        if (null != filePath){
+            request.setImg(filePath);
+        }
+
+        if (request.getFilePathOld().replaceAll(" ", "").equals(filePath)){
+            theSamePath = true;
+        }
+
+         KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(request.getIdTaiKhoan());
 
         khachHangEntity.setMaKhachHang(request.getMaKhachHang());
         khachHangEntity.setDiaChi(request.getDiaChi());
@@ -43,7 +58,7 @@ public class KhachHangService {
         if (!theSamePath){
             System.out.println("không cùng path rồi, xóa file cũ");
             System.out.println("path: " +request.getFilePathOld());
-            deleteFileIfExist(request.getFilePathOld());
+            fileService.deleteFileIfExist(request.getFilePathOld());
         }
         khachHangEntity.setImg(request.getImg());
         khachHangEntity.setSoDienThoai(request.getSoDienThoai());
@@ -51,68 +66,8 @@ public class KhachHangService {
         return khachHangRepository.save(khachHangEntity);
     }
 
-    public String saveFile(String imgBase64, String fileName, String fileTail) throws IOException {
-        makeDirectoryIfNotExist();
-
-        Path filePath = Paths.get(Constant.IMAGES_DIR_DEFAULT,
-                fileName.concat(".").concat(fileTail));
-// nếu tên file trùng thì tự động nó sẽ thay thế nên ko phải gọi hàm xóa
-//        deleteFileIfExist(filePath.toString());
-
-        System.out.println("bưats đầu vào hàm saveFile");
-        System.out.println("fie path: " + filePath);
-        System.out.println("fie path: " + fileName);
-        System.out.println("fie path: " + fileTail);
-        //System.out.println("fie path: "+ imgBase64);
-        try {
-//            byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-//            FileUtils.writeByteArrayToFile(new File(outputFileName), decodedBytes);
-
-
-            //byte[] decodedBytes = Base64.getDecoder().decode(imgBase64);
-            byte[] decodedBytes = Base64.getMimeDecoder().decode(imgBase64);
-            FileUtils.writeByteArrayToFile(new File(filePath.toString()), decodedBytes);
-
-            System.out.println("file path:tositring:  " + filePath.toString());
-            return filePath.toString();
-        } catch (IOException e) {
-//            LOGGER.info("Can not save img {}", filePath.toString());
-            throw e;
-        }
-    }
-
-    public String getFile(String filePath) throws IOException {
-        try {
-            File file = new File(filePath.replaceAll(" ", ""));
-            //String imgBase64 = "";
-//            if (file.canRead()) {
-
-            byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
-            String imgBase64 = Base64.getEncoder().encodeToString(fileContent);
-//
-//            }
-
-            return imgBase64;
-        } catch (IOException e) {
-            throw e;
-        }
-    }
-
-    private void makeDirectoryIfNotExist() {
-        File directory = new File(Constant.IMAGES_DIR_DEFAULT);
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-    }
-
-    private void deleteFileIfExist(String pathFile) {
-        File file = new File(pathFile);
-
-        if (null != file) {
-            file.delete();
-        }
-
-        System.out.println("pass delete file if trùng");
+    public String getImgBase64(String path) throws IOException {
+        return fileService.getFile(path);
     }
 
     public KhachHangEntity saveOne(KhachHangEntity khachHangEntity){
@@ -122,5 +77,11 @@ public class KhachHangService {
     public KhachHangEntity findByIdTaiKhoan(Integer id){
         return khachHangRepository.findByIdTaiKhoan(id);
     }
+
+    public KhachHangEntity getKhachHangByUserName(String tenDangNhap){
+        return khachHangRepositoryCustom.getKhachHang(tenDangNhap);
+    }
+
+
 
 }

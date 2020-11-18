@@ -20,11 +20,10 @@ public class KhachHangRepositoryCustomImpl implements KhachHangRepositoryCustom 
     public KhachHangEntity getKhachHang(String tenDangNhap) {
         Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanRepository.findByTenDangNhap(tenDangNhap);
 
-        if (!taiKhoanEntity.isPresent()){
+        if (taiKhoanEntity.isEmpty()){ // !ispresent = isempty
             return  null;
         }
-        KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(taiKhoanEntity.get().getId());
-        return khachHangEntity;
+        return khachHangRepository.findByIdTaiKhoan(taiKhoanEntity.get().getId());
 //        return null;
     }
 }

@@ -1,8 +1,10 @@
 package com.mta.shop.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Data
@@ -26,5 +28,9 @@ public class ThuongHieuEntity {
 
     @Column(name = "MOTA")
     private String moTa;
+
+    @OneToMany(mappedBy = "thuongHieuEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @JsonBackReference
+    private Collection<SanPhamEntity> sanPhamEntities;
 
 }

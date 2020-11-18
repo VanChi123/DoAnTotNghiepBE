@@ -77,6 +77,7 @@ public class TaiKhoanController {
         return taiKhoanEntity;
     }
 
+    // ok: get all tài khoản admin
     @PostMapping("/get-all")
     public AppResponse testGetTaiKhoan(@RequestBody GetAccountListRequest request) {
         System.out.println("request:" + request);

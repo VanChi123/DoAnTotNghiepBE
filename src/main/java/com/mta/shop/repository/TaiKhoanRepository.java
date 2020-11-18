@@ -1,5 +1,6 @@
 package com.mta.shop.repository;
 
+import com.mta.shop.entities.QuyenSuDungEntity;
 import com.mta.shop.entities.TaiKhoanEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +29,14 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoanEntity, Intege
     @Query("select t from TaiKhoanEntity t " +
             "where (:tenDangNhap is null or t.tenDangNhap like concat('%',:tenDangNhap,'%'))" +
             "and (:email is null or t.email like concat('%',:email,'%'))"
+//            +
+//            "and t.quyenSuDungEntities in :quyenSuDungEntities"
     )
     Page<TaiKhoanEntity> searchAllAccount(Pageable pageable,
-                                               @Param("tenDangNhap") String tenDangNhap,
-                                               @Param("email") String email);
+                                          @Param("tenDangNhap") String tenDangNhap,
+                                          @Param("email") String email);
+//            ,
+//                                          @Param("quyenSuDungEntities") List<QuyenSuDungEntity> quyenSuDungEntities);
 
 //    @Query("select t from TaiKhoanEntity t " +
 //            " WHERE t.tenDangNhap LIKE CONCAT('%',:tenDangNhap,'%')" +
