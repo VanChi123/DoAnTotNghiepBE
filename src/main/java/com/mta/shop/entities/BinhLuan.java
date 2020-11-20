@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Collection;
 
 @Table(name = "BINHLUAN")
 @Entity // Đánh dấu đây là table trong db

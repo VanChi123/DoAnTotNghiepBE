@@ -200,4 +200,9 @@ public class TaiKhoanService {
 //        q = quyenSuDungService.findAll();
         return taiKhoanRepository.searchAllAccount(PageRequest.of(request.getPageNumber(),request.getPageSize()), request.getTenDangNhap(), request.getEmail());
     }
+
+//    // lấy 1 tài khoản theo id;
+    public Optional<TaiKhoanEntity> getAccountByTenDangNhap(String tenDangnhap){
+        return taiKhoanRepository.findByTenDangNhap(tenDangnhap);
+    }
 }
