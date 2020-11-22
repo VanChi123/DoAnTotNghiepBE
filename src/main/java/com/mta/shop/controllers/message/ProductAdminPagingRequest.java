@@ -17,3 +17,5 @@ public class ProductAdminPagingRequest {
     private Float priceLower;
     private Float priceUpper;
 }
+
+

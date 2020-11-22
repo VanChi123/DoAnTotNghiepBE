@@ -40,6 +40,8 @@ public class SanPhamDTO {
     private Star star;
 
     private Collection<BinhLuan> binhLuans;
+//    private Collection<Favorite> favorites;
+    private Collection<TaiKhoanEntity> taiKhoanEntities;
 
     public SanPhamDTO(SanPhamEntity sanPhamEntity, String imgBase64, String fileTail ){
         this.id = sanPhamEntity.getId();
@@ -66,6 +68,9 @@ public class SanPhamDTO {
         this.star = sanPhamEntity.getStar();
 
         this.binhLuans = sanPhamEntity.getBinhLuans();
+        // this.favorites = sanPhamEntity.getFavorites();
+
+        this.taiKhoanEntities = sanPhamEntity.getTaiKhoanEntities();
 
         this.imgBase64 = imgBase64;
         this.fileTail = fileTail;

@@ -89,7 +89,32 @@ public class TaiKhoanEntity {
 
 
     @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
-    @JsonBackReference
+    @JsonIgnore
+//    @JsonBackReference
     private Collection<BinhLuan> binhLuans;
 
+//    @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+//    private Collection<Favorite> favorites;
+
+//    @ManyToMany
+    @ManyToMany(mappedBy = "taiKhoanEntities")
+//    @JoinTable(
+//            name = "FAVORITE",
+//            joinColumns = {@JoinColumn(name = "IDTAIKHOAN", insertable = true, updatable = true)},
+//            inverseJoinColumns = {@JoinColumn(name = "IDSANPHAM", insertable = true, updatable = true)})
+
+    @JsonIgnore
+
+//    @JsonBackReference  // chỉ được sử dụng JsonBack 1 lần trong entity này ko báo lỗi many backreference
+    private List<SanPhamEntity> sanPhamEntities;
+
+    @Override
+    public String toString() {
+        return "TaiKhoanEntity{" +
+                "id=" + id +
+                ", tenDangNhap='" + tenDangNhap + '\'' +
+                ", matKhau='" + matKhau + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

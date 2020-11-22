@@ -1,11 +1,13 @@
 package com.mta.shop.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "SANPHAM")
 @Entity // Đánh dấu đây là table trong db
@@ -130,6 +132,16 @@ public class SanPhamEntity {
 
     @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
     private Collection<BinhLuan> binhLuans;
+
+    // mappring với tài khoản :favorite
+//    @ManyToMany(mappedBy = "sanPhamEntities")
+    @ManyToMany
+    @JoinTable(
+            name = "FAVORITE",
+            joinColumns = {@JoinColumn(name = "IDSANPHAM", insertable = true, updatable = true)},
+            inverseJoinColumns = {@JoinColumn(name = "IDTAIKHOAN", insertable = true, updatable = true)})
+//    @JsonIgnore
+    private List<TaiKhoanEntity> taiKhoanEntities;
 
     @Override
     public String toString() {

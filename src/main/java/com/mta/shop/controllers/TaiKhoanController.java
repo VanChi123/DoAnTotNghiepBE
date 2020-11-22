@@ -1,20 +1,25 @@
 package com.mta.shop.controllers;
 
 import com.mta.shop.controllers.message.*;
-import com.mta.shop.controllers.message.TaiKhoan.AddAccountManyRoleRequest;
-import com.mta.shop.controllers.message.TaiKhoan.AddAccountRequest;
-import com.mta.shop.controllers.message.TaiKhoan.DeleteAccountManyRoleRequest;
-import com.mta.shop.controllers.message.TaiKhoan.GetAccountListRequest;
+import com.mta.shop.controllers.message.TaiKhoan.*;
+import com.mta.shop.entities.SanPhamEntity;
 import com.mta.shop.entities.TaiKhoanEntity;
+import com.mta.shop.repository.SanPhamRepository;
 import com.mta.shop.repository.TaiKhoanRepository;
 import com.mta.shop.repository.TaiKhoanRepositoryCustom;
+import com.mta.shop.service.SanPhamService;
 import com.mta.shop.service.TaiKhoanService;
+import com.mta.shop.service.mapper.SanPhamDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -25,6 +30,8 @@ public class TaiKhoanController {
     private final TaiKhoanRepositoryCustom taiKhoanRepositoryCustom;
     private final TaiKhoanService taiKhoanService;
     private final TaiKhoanRepository taiKhoanRepository;
+    private final SanPhamService sanPhamService;
+
 
     // thêm mới tài khoản
     @PostMapping("/add")
@@ -141,6 +148,51 @@ public class TaiKhoanController {
         } else {
             appResponse = new AppResponseFailure();
             appResponse.setData(false);
+        }
+        return appResponse;
+    }
+
+    // Lấy danh sách snar phẩm yêu thích của tài khoản
+    @PostMapping("/get-list-favorite")
+    public AppResponse getListFavorite(@RequestBody GetFavoriteListByAccountRequest request) {
+        System.out.println("request:" + request);
+
+        Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanService.getAccountByTenDangNhap(request.getTenDangNhap());
+        AppResponse appResponse;
+        if (taiKhoanEntity.isPresent()){
+
+            appResponse = new AppResponseSuccess();
+
+            List<SanPhamEntity> sanPhamEntities = taiKhoanEntity.get().getSanPhamEntities();
+
+            List<SanPhamDTO> li = sanPhamEntities.stream().map(e -> {
+                try {
+                    return new SanPhamDTO(e, sanPhamService.getImgBase64(e.getImg()), "");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                    return null; // phải có return cho thằng catch
+                }
+            }).collect(Collectors.toList());
+            appResponse.setData(li);
+            // appResponse.setData(taiKhoanEntity.get().getFavorites());
+        }else {
+            appResponse = new AppResponseFailure();
+        }
+        return appResponse;
+    }
+
+    // yêu thích sản phẩm or ko yêu thích
+    // Lấy danh sách snar phẩm yêu thích của tài khoản
+    @PostMapping("/favorite")
+    public AppResponse getListFavorite(@RequestBody FavoriteOrUnFavorityRequest request) {
+        System.out.println("request:" + request);
+        AppResponse appResponse;
+
+        SanPhamEntity sanPhamEntity = taiKhoanService.favorite(request);
+        if (null != sanPhamEntity){
+            appResponse = new AppResponseSuccess();
+        }else {
+            appResponse = new AppResponseFailure();
         }
         return appResponse;
     }

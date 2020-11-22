@@ -3,6 +3,7 @@ package com.mta.shop.controllers;
 import com.mta.shop.controllers.message.AppResponse;
 import com.mta.shop.controllers.message.AppResponseFailure;
 import com.mta.shop.controllers.message.AppResponseSuccess;
+import com.mta.shop.controllers.message.TaiKhoan.GetFavoriteListByAccountRequest;
 import com.mta.shop.controllers.message.binhluan.BinhLuanAddRequest;
 import com.mta.shop.entities.TaiKhoanEntity;
 import com.mta.shop.service.BinhLuanService;
@@ -43,5 +44,4 @@ public class BinhLuanController {
         }
         return appResponse;
     }
-
 }
