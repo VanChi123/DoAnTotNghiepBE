@@ -1,43 +1,43 @@
 package com.mta.shop.controllers;
 
-import com.mta.shop.controllers.message.loaisanpham.AddCategoryRequest;
-import com.mta.shop.controllers.message.thuonghieu.AddModelRequest;
 import com.mta.shop.controllers.message.AppResponse;
 import com.mta.shop.controllers.message.AppResponseSuccess;
+import com.mta.shop.controllers.message.loaisanpham.AddCategoryRequest;
+import com.mta.shop.controllers.message.star.AddStarRequest;
 import com.mta.shop.entities.LoaiSanPham;
-import com.mta.shop.entities.ThuongHieuEntity;
+import com.mta.shop.entities.Star;
 import com.mta.shop.service.LoaiSanPhamService;
+import com.mta.shop.service.StarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/category")
+@RequestMapping("/star")
 @RequiredArgsConstructor
-public class LoaiSanPhamController {
-    private final LoaiSanPhamService loaiSanPhamService;
+public class StarController {
+    private final StarService starService;
 
-    // lấy tất cả loại sản phẩm
+    // lấy tất cả
     @GetMapping("/")
     public AppResponse getAll() {
-        List<LoaiSanPham> loaiSanPhamEntityList = loaiSanPhamService.getAll();
+        List<Star> starList = starService.getAll();
 
         AppResponse appResponse = new AppResponseSuccess();
-        appResponse.setData(loaiSanPhamEntityList);
+        appResponse.setData(starList);
         return appResponse;
     }
 
     // thêm mới + sửa
     @PostMapping("/add")
-    public AppResponse addNew(@RequestBody AddCategoryRequest request){
+    public AppResponse addNew(@RequestBody AddStarRequest request){
         System.out.println("request:" + request);
-        LoaiSanPham loaiSanPham = loaiSanPhamService.addNew(request.getLoaiSanPham());
+        Star star = starService.addNew(request.getStar());
 
         AppResponse appResponse = new AppResponseSuccess();
-        appResponse.setData(loaiSanPham);
+        appResponse.setData(star);
         return appResponse;
     }
 
@@ -46,7 +46,7 @@ public class LoaiSanPhamController {
     public AppResponse delete(@PathVariable Integer id) {
         System.out.println("id:" + id);
 
-        loaiSanPhamService.delete(id);
+        starService.delete(id);
         return new AppResponseSuccess();
     }
 

@@ -1,16 +1,12 @@
 package com.mta.shop.controllers;
 
-import com.mta.shop.controllers.message.AddModelRequest;
 import com.mta.shop.controllers.message.AppResponse;
 import com.mta.shop.controllers.message.AppResponseSuccess;
 import com.mta.shop.entities.QuyenSuDungEntity;
-import com.mta.shop.entities.ThuongHieuEntity;
 import com.mta.shop.service.QuyenSuDungService;
-import com.mta.shop.service.ThuongHieuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 @RestController

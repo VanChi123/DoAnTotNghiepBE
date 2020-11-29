@@ -1,11 +1,13 @@
 package com.mta.shop.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity // Đánh dấu đây là table trong db
@@ -44,10 +46,18 @@ public class KhachHangEntity {
     @Column(name = "IMG")
     private String img;
 
-    @Column(name = "IDTAIKHOAN")
-    private Integer idTaiKhoan;;
+//    @Column(name = "IDTAIKHOAN")
+//    private Integer idTaiKhoan;
 
-//    @OneToOne(cascade = CascadeType.ALL)
+//    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "IDTAIKHOAN", referencedColumnName = "ID")
 //    private TaiKhoanEntity taiKhoanEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "IDTAIKHOAN", insertable = true, updatable = true)
+    private TaiKhoanEntity taiKhoanEntity;
+
+    @OneToMany(mappedBy = "khachHangEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @JsonBackReference
+    private Collection<GioHang> gioHangs;
 }

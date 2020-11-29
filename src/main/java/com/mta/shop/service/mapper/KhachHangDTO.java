@@ -32,7 +32,7 @@ public class KhachHangDTO {
         this.gioiTinh = khachHangEntity.getGioiTinh();
         this.diaChi = khachHangEntity.getDiaChi();
         this.soDienThoai = khachHangEntity.getSoDienThoai();
-        this.idTaiKhoan = khachHangEntity.getIdTaiKhoan();
+        // this.idTaiKhoan = khachHangEntity.getIdTaiKhoan();
         this.img = khachHangEntity.getImg();
     }
 
@@ -44,7 +44,7 @@ public class KhachHangDTO {
         this.gioiTinh = khachHangEntity.getGioiTinh();
         this.diaChi = khachHangEntity.getDiaChi();
         this.soDienThoai = khachHangEntity.getSoDienThoai();
-        this.idTaiKhoan = khachHangEntity.getIdTaiKhoan();
+        // this.idTaiKhoan = khachHangEntity.getIdTaiKhoan();
         this.img = khachHangEntity.getImg();
 
         this.imgBase64 = imgBase64;

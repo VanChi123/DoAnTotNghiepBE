@@ -1,4 +1,4 @@
-package com.mta.shop.controllers.message.TaiKhoan;
+package com.mta.shop.controllers.message.taikhoan;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

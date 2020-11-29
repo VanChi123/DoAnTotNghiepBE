@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVienEntity, Integer> {
-    public Optional<NhanVienEntity> findByIdTaiKhoan(Integer id);
+    Optional<NhanVienEntity> findByIdTaiKhoan(Integer id);
 }

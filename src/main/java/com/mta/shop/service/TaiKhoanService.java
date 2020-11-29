@@ -1,9 +1,9 @@
 package com.mta.shop.service;
 
-import com.mta.shop.controllers.message.TaiKhoan.AddAccountManyRoleRequest;
-import com.mta.shop.controllers.message.TaiKhoan.DeleteAccountManyRoleRequest;
-import com.mta.shop.controllers.message.TaiKhoan.FavoriteOrUnFavorityRequest;
-import com.mta.shop.controllers.message.TaiKhoan.GetAccountListRequest;
+import com.mta.shop.controllers.message.taikhoan.AddAccountManyRoleRequest;
+import com.mta.shop.controllers.message.taikhoan.DeleteAccountManyRoleRequest;
+import com.mta.shop.controllers.message.taikhoan.FavoriteOrUnFavorityRequest;
+import com.mta.shop.controllers.message.taikhoan.GetAccountListRequest;
 import com.mta.shop.controllers.message.UpdatePassword;
 import com.mta.shop.entities.*;
 import com.mta.shop.repository.SanPhamRepository;
@@ -165,13 +165,13 @@ public class TaiKhoanService {
         if (typeAccount[0] == 2) {
             System.out.println("loai tài khoản :khách hàng");
 
-            KhachHangEntity khachHangEntity = khachHangService.findByIdTaiKhoan(taiKhoanEntity.getId());
-            if (null == khachHangEntity) {
-
-            } else {
-                khachHangEntity.setIdTaiKhoan(null);
-                khachHangService.saveOne(khachHangEntity);
-            }
+//            KhachHangEntity khachHangEntity = khachHangService.findByIdTaiKhoan(taiKhoanEntity.getId());
+//            if (null == khachHangEntity) {
+//
+//            } else {
+//                khachHangEntity.setTaiKhoanEntity(null);
+//                khachHangService.saveOne(khachHangEntity);
+//            }
         }
 
         taiKhoanRepository.deleteById(request.getId());
@@ -202,9 +202,14 @@ public class TaiKhoanService {
         return taiKhoanRepository.searchAllAccount(PageRequest.of(request.getPageNumber(), request.getPageSize()), request.getTenDangNhap(), request.getEmail());
     }
 
-    //    // lấy 1 tài khoản theo id;
+    //    // lấy 1 tài khoản theo tên đăng nhập;
     public Optional<TaiKhoanEntity> getAccountByTenDangNhap(String tenDangnhap) {
         return taiKhoanRepository.findByTenDangNhap(tenDangnhap);
+    }
+
+    // lấy 1 tài khoản theo id;
+    public Optional<TaiKhoanEntity> getById(Integer id) {
+        return taiKhoanRepository.findById(id);
     }
 
     //    yêu thích or ko yêu thích 1 snar phẩm

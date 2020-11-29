@@ -42,7 +42,7 @@ public interface SanPhamRepository extends JpaRepository<SanPhamEntity, Integer>
 
     // lấy 1 sản phẩm theo mã
     @Query( value = "SELECT * FROM SanPham sp where sp.MaSanPham = :maSanPham", nativeQuery=true)
-    public Optional<SanPhamEntity> findByMaSanPham(@Param("maSanPham") String maSanPham);
+    Optional<SanPhamEntity> findByMaSanPham(@Param("maSanPham") String maSanPham);
 }
 
 

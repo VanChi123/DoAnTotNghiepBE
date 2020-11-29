@@ -22,7 +22,7 @@ public class Star {
         @Column(name = "SOSAO")
         private Integer soSao;
 
-        @OneToMany(mappedBy = "star", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+        @OneToMany(mappedBy = "star", cascade = CascadeType.ALL, orphanRemoval=false) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
         @JsonBackReference
         private Collection<SanPhamEntity> sanPhamEntities;
 

@@ -45,55 +45,17 @@ public class SanPhamEntity {
     @Column(name = "TENSANPHAM")
     private String tenSanPham;
 
-    @Column(name = "GIA")
-    private Float gia;
-
-    @Column(name = "DOITUONGSUDUNG")
-    private String doiTuongSuDung;
-
-    @Column(name = "KICHTHUOCBEMAT")
-    private Float kichThuocBeMat;
 
 //    @Column(name = "IDLOAISANPHAM")
 //    private int idLoaiSanPham;
-
-
-    @Column(name = "CHATLIEUMATKINH")
-    private String chatLieuMatKinh;
-
-
-    @Column(name = "CHATLIEUDAY")
-    private String chatLieuDay;
-
-    @Column(name = "DODAY")
-    private Float doDay;
-
-    @Column(name = "DODAI")
-    private Float doDai;
-
-    @Column(name = "DORONGCUADAY")
-    private Float doRongCuaDay;
-
-    @Column(name = "KIEUKHOA")
-    private String kieuKhoa;
-
-    @Column(name = "CHATLIEUVOMAY")
-    private String chatLieuVoMay;
-
-    @Column(name = "MAY")
-    private String may;
-
-    @Column(name = "KHANANGCHIUNUOC")
-    private String khaNangChiuNuoc;
+    @Column(name = "GIA")
+    private Float gia;
 
     @Column(name = "GIAMGIA")
     private Integer giamGia;
 
-    @Column(name = "IMG")
-    private String img;
-
-    @Column(name = "NGAYCAPNHAP")
-    private Date ngayCapNhap;
+    @Column(name = "ANHDAIDIEN")
+    private String anhDaiDien;
 
 //    public LoaiSanPham getLoaiSanPham() {
 //        return loaiSanPham;
@@ -143,6 +105,13 @@ public class SanPhamEntity {
 //    @JsonIgnore
     private List<TaiKhoanEntity> taiKhoanEntities;
 
+    @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    private Collection<ChiTietSanPham> chiTietSanPhams;
+
+    @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @JsonBackReference
+    private Collection<GioHang> gioHangs;
+
     @Override
     public String toString() {
         return "SanPhamEntity{" +
@@ -150,20 +119,8 @@ public class SanPhamEntity {
                 ", maSanPham='" + maSanPham + '\'' +
                 ", tenSanPham='" + tenSanPham + '\'' +
                 ", gia=" + gia +
-                ", doiTuongSuDung='" + doiTuongSuDung + '\'' +
-                ", kichThuocBeMat=" + kichThuocBeMat +
-                ", chatLieuMatKinh='" + chatLieuMatKinh + '\'' +
-                ", chatLieuDay='" + chatLieuDay + '\'' +
-                ", doDay=" + doDay +
-                ", doDai=" + doDai +
-                ", doRongCuaDay=" + doRongCuaDay +
-                ", kieuKhoa='" + kieuKhoa + '\'' +
-                ", chatLieuVoMay='" + chatLieuVoMay + '\'' +
-                ", may='" + may + '\'' +
-                ", khaNangChiuNuoc='" + khaNangChiuNuoc + '\'' +
                 ", giamGia=" + giamGia +
-                ", img='" + img + '\'' +
-                ", ngayCapNhap=" + ngayCapNhap +
+                ", anhDaiDien='" + anhDaiDien + '\'' +
                 '}';
     }
 }

@@ -1,10 +1,10 @@
 package com.mta.shop.controllers;
 
 import com.mta.shop.controllers.message.*;
-import com.mta.shop.controllers.message.TaiKhoan.*;
+import com.mta.shop.controllers.message.taikhoan.*;
 import com.mta.shop.entities.SanPhamEntity;
+import com.mta.shop.entities.Star;
 import com.mta.shop.entities.TaiKhoanEntity;
-import com.mta.shop.repository.SanPhamRepository;
 import com.mta.shop.repository.TaiKhoanRepository;
 import com.mta.shop.repository.TaiKhoanRepositoryCustom;
 import com.mta.shop.service.SanPhamService;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,15 @@ public class TaiKhoanController {
     private final TaiKhoanRepository taiKhoanRepository;
     private final SanPhamService sanPhamService;
 
+    // lấy tất cả
+    @GetMapping("/")
+    public AppResponse getAll() {
+        List<TaiKhoanEntity> list = taiKhoanRepository.findAll();
+
+        AppResponse appResponse = new AppResponseSuccess();
+        appResponse.setData(list);
+        return appResponse;
+    }
 
     // thêm mới tài khoản
     @PostMapping("/add")
@@ -167,7 +175,7 @@ public class TaiKhoanController {
 
             List<SanPhamDTO> li = sanPhamEntities.stream().map(e -> {
                 try {
-                    return new SanPhamDTO(e, sanPhamService.getImgBase64(e.getImg()), "");
+                    return new SanPhamDTO(e, sanPhamService.getImgBase64(e.getAnhDaiDien()), "");
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                     return null; // phải có return cho thằng catch

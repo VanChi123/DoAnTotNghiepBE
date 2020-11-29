@@ -21,4 +21,14 @@ public class LoaiSanPhamService {
         return loaiSanPhamRepository.findById(id);
     }
 
+    public LoaiSanPham addNew(LoaiSanPham loaiSanPham){
+        return loaiSanPhamRepository.save(loaiSanPham);
+    }
+
+    public void delete(Integer id){
+        Optional<LoaiSanPham> loaiSanPham = loaiSanPhamRepository.findById(id);
+
+        loaiSanPham.ifPresent(sanPham -> loaiSanPhamRepository.delete(sanPham));
+    }
+
 }

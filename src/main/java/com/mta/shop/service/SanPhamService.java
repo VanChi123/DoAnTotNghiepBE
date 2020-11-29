@@ -34,6 +34,10 @@ public class SanPhamService {
     @Autowired
     private LoaiSanPhamService loaiSanPhamService;
 
+    public List<SanPhamEntity> getAll() {
+        return sanPhamRepository.findAll();
+    }
+
     public Page<SanPhamEntity> searchAdminPaging(ProductAdminPagingRequest request) {
         List<Integer> loaiSanPhamList = new ArrayList<>();
         List<Integer> thuongHieuList;
@@ -73,7 +77,7 @@ public class SanPhamService {
         // Save url to database
         String filePath = fileService.saveFile(request.getImgBase64(), request.getFileName(), request.getFileTail());
         if (null != filePath) {
-            sanPhamEntity.setImg(filePath);
+            sanPhamEntity.setAnhDaiDien(filePath);
         }
 
         Integer idThuongHieu = sanPhamEntity.getThuongHieuEntity().getId();
@@ -104,13 +108,13 @@ public class SanPhamService {
         SanPhamEntity sanPhamEntity = sanPhamEntityOptional.get();
 
         // kiểm tra nếu đường dẫn gửi lên và đường dẫn trong db giống nhau thì ko cập nhật ảnh
-        if (sanPhamEntity.getImg().equals(sanPhamEntityRequest.getImg())) {
+        if (sanPhamEntity.getAnhDaiDien().equals(sanPhamEntityRequest.getAnhDaiDien())) {
 
         } else {
             // Save url to database
             String filePath = fileService.saveFile(request.getImgBase64(), request.getFileName(), request.getFileTail());
             if (null != filePath) {
-                sanPhamEntity.setImg(filePath);
+                sanPhamEntity.setAnhDaiDien(filePath);
             }
         }
 
@@ -126,24 +130,13 @@ public class SanPhamService {
         sanPhamEntity.setMaSanPham(sanPhamEntityRequest.getMaSanPham());
         sanPhamEntity.setTenSanPham(sanPhamEntityRequest.getTenSanPham());
         sanPhamEntity.setGia(sanPhamEntityRequest.getGia());
-        sanPhamEntity.setDoiTuongSuDung(sanPhamEntityRequest.getDoiTuongSuDung());
-        sanPhamEntity.setKichThuocBeMat(sanPhamEntityRequest.getKichThuocBeMat());
-        sanPhamEntity.setChatLieuMatKinh(sanPhamEntityRequest.getChatLieuMatKinh());
-        sanPhamEntity.setChatLieuDay(sanPhamEntityRequest.getChatLieuDay());
-        sanPhamEntity.setDoDay(sanPhamEntityRequest.getDoDay());
-        sanPhamEntity.setDoDai(sanPhamEntityRequest.getDoDai());
-        sanPhamEntity.setKieuKhoa(sanPhamEntityRequest.getKieuKhoa());
-        sanPhamEntity.setDoRongCuaDay(sanPhamEntityRequest.getDoRongCuaDay());
 
-        sanPhamEntity.setChatLieuVoMay(sanPhamEntityRequest.getChatLieuVoMay());
-        sanPhamEntity.setMay(sanPhamEntityRequest.getMay());
-        sanPhamEntity.setKhaNangChiuNuoc(sanPhamEntityRequest.getKhaNangChiuNuoc());
         sanPhamEntity.setGiamGia(sanPhamEntityRequest.getGiamGia());
-        sanPhamEntity.setImg(sanPhamEntityRequest.getImg());
+        sanPhamEntity.setAnhDaiDien(sanPhamEntityRequest.getAnhDaiDien());
 
         sanPhamEntity.setLoaiSanPham(loaiSanPhamService.findById(idLoaiSanPham).isEmpty() ? null : loaiSanPhamService.findById(idLoaiSanPham).get());
         sanPhamEntity.setThuongHieuEntity(thuongHieuService.getThuongHieuById(idLoaiSanPham).isEmpty() ? null : thuongHieuService.getThuongHieuById(idLoaiSanPham).get());
-        sanPhamEntity.setNgayCapNhap(new java.sql.Date(System.currentTimeMillis()));
+//        sanPhamEntity.setNgayCapNhap(new java.sql.Date(System.currentTimeMillis()));
 
         return sanPhamRepository.save(sanPhamEntity);
     }
@@ -157,7 +150,7 @@ public class SanPhamService {
 
         SanPhamEntity sanPhamEntity1 = sanPhamEntity.get();
 
-        return new SanPhamDTO(sanPhamEntity1, getImgBase64(sanPhamEntity1.getImg()), "");
+        return new SanPhamDTO(sanPhamEntity1, getImgBase64(sanPhamEntity1.getAnhDaiDien()), "");
     }
 
     public Boolean deleteAProduct(Integer idSanPham) throws IOException {

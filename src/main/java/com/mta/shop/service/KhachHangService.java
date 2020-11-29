@@ -1,23 +1,18 @@
 package com.mta.shop.service;
 
-import com.mta.shop.configure.Constant;
 import com.mta.shop.controllers.message.UpdateInformationCustomerRequest;
 import com.mta.shop.entities.KhachHangEntity;
-import com.mta.shop.entities.NhanVienEntity;
 import com.mta.shop.repository.KhachHangRepository;
 import com.mta.shop.repository.KhachHangRepositoryCustom;
 import com.mta.shop.service.utils.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class KhachHangService {
@@ -44,26 +39,27 @@ public class KhachHangService {
             theSamePath = true;
         }
 
-         KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(request.getIdTaiKhoan());
+//KhachHangEntity khachHangEntity = khachHangRepository.findByIdTaiKhoan(request.getIdTaiKhoan());
+//
+//        khachHangEntity.setMaKhachHang(request.getMaKhachHang());
+//        khachHangEntity.setDiaChi(request.getDiaChi());
+//        khachHangEntity.setGioiTinh(request.getGioiTinh());
+////        khachHangEntity.setNgaySinh(request.getNgaySinh());
+//        khachHangEntity.setNgaySinh(new java.sql.Date(request.getNgaySinh().getTime()));
+//        //khachHangEntity.setNgaySinh(new java.sql.Timestamp(request.getNgaySinh().getTime()));
+//        khachHangEntity.setTenKhachHang(request.getTenKhachHang());
+//
+//        // kiểm tra ảnh mới và cũ có khác nhau ko , nếu khác nhau thì xóa ảnh cũ
+//        if (!theSamePath){
+//            System.out.println("không cùng path rồi, xóa file cũ");
+//            System.out.println("path: " +request.getFilePathOld());
+//            fileService.deleteFileIfExist(request.getFilePathOld());
+//        }
+//        khachHangEntity.setImg(request.getImg());
+//        khachHangEntity.setSoDienThoai(request.getSoDienThoai());
 
-        khachHangEntity.setMaKhachHang(request.getMaKhachHang());
-        khachHangEntity.setDiaChi(request.getDiaChi());
-        khachHangEntity.setGioiTinh(request.getGioiTinh());
-//        khachHangEntity.setNgaySinh(request.getNgaySinh());
-        khachHangEntity.setNgaySinh(new java.sql.Date(request.getNgaySinh().getTime()));
-        //khachHangEntity.setNgaySinh(new java.sql.Timestamp(request.getNgaySinh().getTime()));
-        khachHangEntity.setTenKhachHang(request.getTenKhachHang());
-
-        // kiểm tra ảnh mới và cũ có khác nhau ko , nếu khác nhau thì xóa ảnh cũ
-        if (!theSamePath){
-            System.out.println("không cùng path rồi, xóa file cũ");
-            System.out.println("path: " +request.getFilePathOld());
-            fileService.deleteFileIfExist(request.getFilePathOld());
-        }
-        khachHangEntity.setImg(request.getImg());
-        khachHangEntity.setSoDienThoai(request.getSoDienThoai());
-
-        return khachHangRepository.save(khachHangEntity);
+  //      return khachHangRepository.save(khachHangEntity);
+        return  null;
     }
 
     public String getImgBase64(String path) throws IOException {
@@ -74,14 +70,36 @@ public class KhachHangService {
         return khachHangRepository.save(khachHangEntity);
     }
 
-    public KhachHangEntity findByIdTaiKhoan(Integer id){
-        return khachHangRepository.findByIdTaiKhoan(id);
-    }
+//    public KhachHangEntity findByIdTaiKhoan(Integer id){
+//        return khachHangRepository.findByIdTaiKhoan(id);
+//    }
 
     public KhachHangEntity getKhachHangByUserName(String tenDangNhap){
         return khachHangRepositoryCustom.getKhachHang(tenDangNhap);
     }
 
+    // lấy tất cả khách hàng
+    public List<KhachHangEntity> getAll(){
+        return khachHangRepository.findAll();
+    }
 
+    // lấy tất cả khách hàng phân trang
+    public Page<KhachHangEntity> getAllPaging(PageRequest pageRequest){
+        return khachHangRepository.findAll(pageRequest);
+    }
 
+    // lấy theo id
+    public Optional<KhachHangEntity> getById(Integer id){
+        return khachHangRepository.findById(id);
+    }
+
+    // thêm mới + cập nhật
+    public KhachHangEntity add(KhachHangEntity khachHangEntity){
+        return khachHangRepository.save(khachHangEntity);
+    }
+
+    // xóa
+    public void delete(KhachHangEntity khachHangEntity){
+        khachHangRepository.delete(khachHangEntity);
+    }
 }

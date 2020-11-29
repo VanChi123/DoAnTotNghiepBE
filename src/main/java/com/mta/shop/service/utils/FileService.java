@@ -41,6 +41,23 @@ public class FileService {
         }
     }
 
+    public String saveFileFullName(String imgBase64, String fileName) throws IOException {
+        makeDirectoryIfNotExist();
+
+        Path filePath = Paths.get(Constant.IMAGES_DIR_DEFAULT, fileName);
+
+        try {
+            byte[] decodedBytes = Base64.getMimeDecoder().decode(imgBase64);
+            FileUtils.writeByteArrayToFile(new File(filePath.toString()), decodedBytes);
+
+            System.out.println("file path: in saving:  " + filePath.toString());
+            return filePath.toString();
+        } catch (IOException e) {
+//            LOGGER.info("Can not save img {}", filePath.toString());
+            throw e;
+        }
+    }
+
     public String getFile(String filePath) throws IOException {
         try {
             File file = new File(filePath.replaceAll(" ", ""));

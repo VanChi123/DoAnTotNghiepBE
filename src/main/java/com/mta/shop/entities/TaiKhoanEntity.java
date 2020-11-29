@@ -27,6 +27,10 @@ public class TaiKhoanEntity {
     @Column(name = "EMAIL")
     private String email;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taiKhoanEntity")
+    @JsonBackReference
+    private List<KhachHangEntity> khachHangEntity;
+
     public TaiKhoanEntity(){
     }
 

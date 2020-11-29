@@ -25,7 +25,8 @@ public class ThuongHieuService {
         return thuongHieuRepository.findById(id);
     }
 
-//    public ThuongHieuEntity addAllThuongHieu(List<ThuongHieuEntity> list){
-//        return thuongHieuRepository.saveAll(Iterable<ThuongHieuEntity> list);
-//    }
+    public void deleteModel(Integer id){
+         Optional<ThuongHieuEntity> thuongHieuEntity = thuongHieuRepository.findById(id);
+        thuongHieuRepository.delete(thuongHieuEntity.get());
+    }
 }

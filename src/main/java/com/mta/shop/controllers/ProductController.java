@@ -4,11 +4,9 @@ import com.mta.shop.controllers.message.AppResponse;
 import com.mta.shop.controllers.message.AppResponseFailure;
 import com.mta.shop.controllers.message.AppResponseSuccess;
 import com.mta.shop.controllers.message.ProductAdminPagingRequest;
-//import com.mta.shop.controllers.message.ProductPaging;
 import com.mta.shop.controllers.message.product.ProductAdminAddRequest;
-import com.mta.shop.entities.LoaiSanPham;
+import com.mta.shop.entities.KhachHangEntity;
 import com.mta.shop.entities.SanPhamEntity;
-import com.mta.shop.repository.SanPhamRepositoryCustomImp;
 import com.mta.shop.service.SanPhamService;
 import com.mta.shop.service.mapper.SanPhamDTO;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +21,20 @@ import java.util.List;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
-//    private final SanPhamRepositoryCustomImp sanPhamRepositoryCustomImp;
 
     private final SanPhamService sanPhamService;
+
+    // lấy tất cả
+    @GetMapping(value = "/")
+    public AppResponse getAllProduct(){
+        AppResponse appResponse;
+
+        List<SanPhamEntity> list = sanPhamService.getAll();
+
+        appResponse = new AppResponseSuccess();
+        appResponse.setData(list);
+        return appResponse;
+    }
 
 //    @GetMapping(value = "/get-all")
 //    public List<SanPhamEntity> getProductAll() {
@@ -50,21 +59,14 @@ public class ProductController {
         // Page<SanPhamEntity> list = sanPhamRepositoryCustomImp.findProductsPaging(productPaging.getPageNumber(), productPaging.getPageSize());
         Page<SanPhamDTO> list = sanPhamService.searchAdminPaging(productPaging).map(e -> {
             try {
-                return new SanPhamDTO(e, sanPhamService.getImgBase64(e.getImg()), "");
+                return new SanPhamDTO(e, sanPhamService.getImgBase64(e.getAnhDaiDien()), "");
             } catch (IOException ioException) {
-                return null;
-                // ioException.printStackTrace();
+                return null;  // ioException.printStackTrace();
             }
         });
 
-        if (null != list){
-            appResponse = new AppResponseSuccess();
-            appResponse.setData(list);
-        }else {
-            appResponse = new AppResponseFailure();
-            appResponse.setData(null);
-        }
-
+        appResponse = new AppResponseSuccess();
+        appResponse.setData(list);
         return appResponse;
     }
 
