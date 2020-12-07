@@ -3,8 +3,10 @@ package com.mta.shop.controllers;
 import com.mta.shop.controllers.message.*;
 import com.mta.shop.controllers.message.khachhang.AddCustomerRequest;
 import com.mta.shop.entities.KhachHangEntity;
+import com.mta.shop.entities.QuyenSuDungEntity;
 import com.mta.shop.entities.TaiKhoanEntity;
 import com.mta.shop.service.KhachHangService;
+import com.mta.shop.service.QuyenSuDungService;
 import com.mta.shop.service.TaiKhoanService;
 import com.mta.shop.service.mapper.KhachHangDTO;
 import com.mta.shop.service.utils.FileService;
@@ -13,7 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,7 @@ public class KhachHangController {
     private final KhachHangService khachHangService;
     private final FileService fileService;
     private final TaiKhoanService taiKhoanService;
+    private final QuyenSuDungService quyenSuDungService;
 
     // lấy tất cả
     @GetMapping(value = "/")
@@ -52,6 +57,7 @@ public class KhachHangController {
 
     // thêm mới
     @PostMapping(value = "/add")
+    @Transactional
     public AppResponse addCustomer(@RequestBody AddCustomerRequest request) throws IOException {
         AppResponse appResponse;
 
@@ -59,26 +65,88 @@ public class KhachHangController {
         KhachHangEntity khachHangEntity = request.getKhachHangEntity();
 
         String path = "";
-        if (null != request.getImgBase64() && null != khachHangEntity.getImg()){
+        if (null != khachHangEntity.getImg() && null != request.getImgBase64()){
             path = fileService.saveFileFullName(request.getImgBase64(), khachHangEntity.getImg());
         }
 
         // set các giá trì cho khach hàng để lưu
         khachHangEntity.setImg(path);
 
-        Integer idTaiKhoan = khachHangEntity.getId();
+        Integer idTaiKhoan = khachHangEntity.getTaiKhoanEntity().getId();
+        System.out.println("id" + idTaiKhoan);
+
         if (null != idTaiKhoan){
-            Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanService.getById(khachHangEntity.getId());
+            Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanService.getById(idTaiKhoan);
             if (taiKhoanEntity.isPresent()){
-                khachHangEntity.setTaiKhoanEntity(taiKhoanEntity.get());
+                TaiKhoanEntity taiKhoanEntity1 = taiKhoanEntity.get();
+
+                // cập nhật quyền là khách hàng cho tài khoản
+                List<QuyenSuDungEntity> list = new ArrayList<>();
+                list.add(quyenSuDungService.findById(2));
+                taiKhoanEntity1.setQuyenSuDungEntities(list);
+
+                taiKhoanEntity1 = taiKhoanService.updateAcc(taiKhoanEntity1);
+                System.out.println("Tke"+ taiKhoanEntity1);
+
+                // gán tài khoản cho khách hàng
+                khachHangEntity.setTaiKhoanEntity(taiKhoanEntity1);
             }
         }
+        System.out.println("tài khoản của kh: " + khachHangEntity.getTaiKhoanEntity());
         KhachHangEntity kh = khachHangService.add(khachHangEntity);
 
         appResponse = new AppResponseSuccess();
         appResponse.setData(kh);
         return appResponse;
     }
+
+    // cập nhật
+    @PostMapping(value = "/update-admin")
+    @Transactional
+    public AppResponse updateCustomerAdmin(@RequestBody AddCustomerRequest request) throws IOException {
+        AppResponse appResponse;
+
+        Integer id = request.getKhachHangEntity().getId();
+
+        KhachHangEntity old = khachHangService.getById(id).get();
+        KhachHangEntity newKH = request.getKhachHangEntity();
+
+        // nếu ảnh mới khác ảnh cũ thì set lưu ảnh mới
+        if (null != newKH.getImg() && !old.getImg().equals(newKH.getImg())){
+            newKH.setImg(fileService.saveFileFullName(request.getImgBase64(), newKH.getImg()));
+        }
+
+        Integer idTaiKhoan = newKH.getTaiKhoanEntity().getId();
+        System.out.println("id là" + idTaiKhoan);
+
+        if (null != idTaiKhoan){
+            Optional<TaiKhoanEntity> taiKhoanEntity = taiKhoanService.getById(idTaiKhoan);
+            if (taiKhoanEntity.isPresent()){
+                TaiKhoanEntity taiKhoanEntity1 = taiKhoanEntity.get();
+
+                // cập nhật quyền là khách hàng cho tài khoản
+                List<QuyenSuDungEntity> list = new ArrayList<>();
+                list.add(quyenSuDungService.findById(2));
+                taiKhoanEntity1.setQuyenSuDungEntities(list);
+
+                taiKhoanEntity1 = taiKhoanService.updateAcc(taiKhoanEntity1);
+                System.out.println("Tke"+ taiKhoanEntity1);
+
+                // gán tài khoản cho khách hàng
+                newKH.setTaiKhoanEntity(taiKhoanEntity1);
+            }
+        } else {
+            newKH.setTaiKhoanEntity(null); // lỗi transient unsaved => Cascade
+                                            // insert null cho @manytoone ( joincolumn nullable =true)
+        }
+        System.out.println("tài khoản của kh: " + newKH.getTaiKhoanEntity());
+        KhachHangEntity kh = khachHangService.add(newKH);
+
+        appResponse = new AppResponseSuccess();
+        appResponse.setData(kh);
+        return appResponse;
+    }
+
 
     // lấy tất cả paging
     @GetMapping(value = "/delete/{id}")

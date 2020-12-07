@@ -53,11 +53,11 @@ public class KhachHangEntity {
 //    @JoinColumn(name = "IDTAIKHOAN", referencedColumnName = "ID")
 //    private TaiKhoanEntity taiKhoanEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "IDTAIKHOAN", insertable = true, updatable = true)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "IDTAIKHOAN", insertable = true, updatable = true, nullable=true)
     private TaiKhoanEntity taiKhoanEntity;
 
-    @OneToMany(mappedBy = "khachHangEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @OneToMany(mappedBy = "nhanVienEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
     @JsonBackReference
-    private Collection<GioHang> gioHangs;
+    private Collection<PhieuNhap> phieuNhaps;
 }

@@ -22,6 +22,9 @@ public class LoaiSanPham {
         @Column(name = "ID")
         private Integer id;
 
+        @Column(name = "MALOAISANPHAM")
+        private String maLoaiSanPham;
+
         @Column(name = "TENLOAISANPHAM")
         private String tenLoaiSanPham;
 

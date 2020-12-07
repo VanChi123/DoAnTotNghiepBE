@@ -2,37 +2,27 @@ package com.mta.shop.controllers;
 
 import com.mta.shop.controllers.message.AppResponse;
 import com.mta.shop.controllers.message.AppResponseSuccess;
+import com.mta.shop.controllers.message.giamgia.AddGiamGiaRequest;
 import com.mta.shop.controllers.message.quyen.AddRoleRequest;
+import com.mta.shop.entities.GiamGia;
 import com.mta.shop.entities.QuyenSuDungEntity;
+import com.mta.shop.service.GiamGiaService;
 import com.mta.shop.service.QuyenSuDungService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/role")
+@RequestMapping("/giam-gia")
 @RequiredArgsConstructor
-public class QuyenSuDungController {
-    private final QuyenSuDungService quyenSuDungService;
-
-    // get all roles
-    @GetMapping("/")
-    public AppResponse getAllRole() {
-        List<QuyenSuDungEntity> list = quyenSuDungService.findAll();
-
-        AppResponse appResponse = new AppResponseSuccess();
-        appResponse.setData(list);
-        return appResponse;
-    }
+public class GiamGiaController {
+    private final GiamGiaService giamGiaService;
 
     // get all roles
     @GetMapping("/get-all")
     public AppResponse getAll(@RequestParam Integer pageNumber) {
-        Page<QuyenSuDungEntity> list = quyenSuDungService.findAll(pageNumber);
+        Page<GiamGia> list = giamGiaService.getAllPaging(pageNumber);
 
         AppResponse appResponse = new AppResponseSuccess();
         appResponse.setData(list);
@@ -41,10 +31,10 @@ public class QuyenSuDungController {
 
     // thêm/ sửa
     @PostMapping("/add")
-    public AppResponse add(@RequestBody AddRoleRequest request) {
-        QuyenSuDungEntity quyenSuDungEntity = request.getQuyenSuDungEntity();
+    public AppResponse add(@RequestBody AddGiamGiaRequest request) {
+        GiamGia giamGia = request.getGiamGia();
 
-        QuyenSuDungEntity result = quyenSuDungService.add(quyenSuDungEntity);
+        GiamGia result = giamGiaService.saveOne(giamGia);
 
         AppResponse appResponse = new AppResponseSuccess();
         appResponse.setData(result);
@@ -54,7 +44,7 @@ public class QuyenSuDungController {
     // delete
     @GetMapping("/delete/{id}")
     public AppResponse delete(@PathVariable Integer id) {
-        quyenSuDungService.delete(id);
+        giamGiaService.deleteById(id);
 
         return new AppResponseSuccess();
     }

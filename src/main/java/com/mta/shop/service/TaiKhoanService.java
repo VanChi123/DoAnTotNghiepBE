@@ -152,11 +152,11 @@ public class TaiKhoanService {
         // tìm đến bảng nhân viên và sét nhân viên có id tài khoản null
         if (typeAccount[0] == 1) {
             // nếu ko tìm thấy nhân viên nào thì thôi
-            Optional<NhanVienEntity> nhanVienEntityOpt = nhanVienService.findOneByIdTaiKhoan(taiKhoanEntity.getId());
-            if (nhanVienEntityOpt.isEmpty()) {
+            NhanVienEntity nhanVienEntity = nhanVienService.findOneByIdTaiKhoan(taiKhoanEntity.getId());
+            if (null != nhanVienEntity) {
+
             } else {
-                NhanVienEntity nhanVienEntity = nhanVienEntityOpt.get();
-                nhanVienEntity.setIdTaiKhoan(null);
+                nhanVienEntity.setTaiKhoanEntity(null);
                 nhanVienService.saveOne(nhanVienEntity);
                 System.out.println("loai tài khoản :admin");
             }
@@ -233,5 +233,12 @@ public class TaiKhoanService {
         SanPhamEntity sanPhamEntity1 = sanPhamRepository.save(sanPhamEntity);
 
         return sanPhamEntity1;
+    }
+
+    //    cập nhật tài khoản
+    @Transactional
+    public TaiKhoanEntity updateAcc(TaiKhoanEntity taiKhoanEntity) {
+        System.out.println("tài khaorn entity" + taiKhoanEntity.getQuyenSuDungEntities());
+        return  taiKhoanRepository.save(taiKhoanEntity);
     }
 }

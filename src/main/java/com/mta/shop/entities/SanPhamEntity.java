@@ -2,6 +2,7 @@ package com.mta.shop.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -111,6 +112,10 @@ public class SanPhamEntity {
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
     @JsonBackReference
     private Collection<GioHang> gioHangs;
+
+//    @OneToMany(mappedBy = "sanPhamEntity", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<ChiTietPhieuNhap> chiTietPhieuNhapList;
 
     @Override
     public String toString() {

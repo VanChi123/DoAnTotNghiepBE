@@ -1,6 +1,5 @@
 package com.mta.shop.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +25,9 @@ public class GiamGia {
 
     @Column(name = "TILEGIAM")
     private Integer tiLeGiam;
+
+    @Column(name = "MAGIAMGIA")
+    private String maGiamGia;
 
 //    @OneToMany(mappedBy = "giamGiaJoin", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
 //    @JsonIgnore

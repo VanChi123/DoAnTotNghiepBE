@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SanPhamService {
@@ -38,18 +39,32 @@ public class SanPhamService {
         return sanPhamRepository.findAll();
     }
 
+    public List<SanPhamDTO> getAllDTO() {
+        return sanPhamRepository.findAll().stream().map(e -> new SanPhamDTO(e)).collect(Collectors.toList());
+    }
+
     public Page<SanPhamEntity> searchAdminPaging(ProductAdminPagingRequest request) {
         List<Integer> loaiSanPhamList = new ArrayList<>();
-        List<Integer> thuongHieuList;
+        List<Integer> thuongHieuList = null;
 
         if (null == request.getLoaiSanPham() || request.getLoaiSanPham().size() < 1) {
-            loaiSanPhamList.addAll(Arrays.asList( 1, 2, 3));
+            List<LoaiSanPham> lspList = loaiSanPhamService.getAll();
+            List<Integer> finalLoaiSanPhamList = loaiSanPhamList;
+            lspList.forEach(e -> finalLoaiSanPhamList.add(e.getId()));
+
+            loaiSanPhamList.addAll(finalLoaiSanPhamList);
         } else {
             loaiSanPhamList = request.getLoaiSanPham();
         }
 
         if (null == request.getThuongHieu() || request.getThuongHieu().size() < 1) {
-            thuongHieuList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 9));
+//            List<ThuongHieuEntity> thuongHieuEntityList = thuongHieuService.getAll();
+//
+//            List<Integer> finalThuongHieuList = thuongHieuList;
+//            thuongHieuEntityList.forEach(e -> finalThuongHieuList.add(e.getId()));
+//
+//            thuongHieuList.addAll(finalThuongHieuList);
+            thuongHieuList = thuongHieuService.getAllId();
         } else {
             thuongHieuList = request.getThuongHieu();
         }
@@ -85,7 +100,7 @@ public class SanPhamService {
         System.out.println("th" + thuongHieuEntity);
 
         Integer idLoaiSanPham = sanPhamEntity.getLoaiSanPham().getId();
-        LoaiSanPham loaiSanPham = loaiSanPhamService.findById(idThuongHieu).get();
+        LoaiSanPham loaiSanPham = loaiSanPhamService.findById(idLoaiSanPham).get();
         System.out.println("th" + loaiSanPham);
 
 
@@ -108,34 +123,30 @@ public class SanPhamService {
         SanPhamEntity sanPhamEntity = sanPhamEntityOptional.get();
 
         // kiểm tra nếu đường dẫn gửi lên và đường dẫn trong db giống nhau thì ko cập nhật ảnh
-        if (sanPhamEntity.getAnhDaiDien().equals(sanPhamEntityRequest.getAnhDaiDien())) {
-
-        } else {
+        if (null==sanPhamEntity.getAnhDaiDien()||!sanPhamEntity.getAnhDaiDien().equals(sanPhamEntityRequest.getAnhDaiDien())) {
             // Save url to database
             String filePath = fileService.saveFile(request.getImgBase64(), request.getFileName(), request.getFileTail());
             if (null != filePath) {
                 sanPhamEntity.setAnhDaiDien(filePath);
             }
+        } else {
+
         }
 
         // cập nhật thương hiệu và loại sản phẩm
         Integer idThuongHieu = sanPhamEntityRequest.getThuongHieuEntity().getId();
-//        ThuongHieuEntity thuongHieuEntity = thuongHieuService.getThuongHieuById(idThuongHieu).get();
-//        System.out.println("th" + thuongHieuEntity);
-
         Integer idLoaiSanPham = sanPhamEntityRequest.getLoaiSanPham().getId();
-//        LoaiSanPham loaiSanPham = loaiSanPhamService.findById(idLoaiSanPham).get();
-//        System.out.println("th" + loaiSanPham);
+
 
         sanPhamEntity.setMaSanPham(sanPhamEntityRequest.getMaSanPham());
         sanPhamEntity.setTenSanPham(sanPhamEntityRequest.getTenSanPham());
         sanPhamEntity.setGia(sanPhamEntityRequest.getGia());
 
         sanPhamEntity.setGiamGia(sanPhamEntityRequest.getGiamGia());
-        sanPhamEntity.setAnhDaiDien(sanPhamEntityRequest.getAnhDaiDien());
+//        sanPhamEntity.setAnhDaiDien(sanPhamEntityRequest.getAnhDaiDien());
 
         sanPhamEntity.setLoaiSanPham(loaiSanPhamService.findById(idLoaiSanPham).isEmpty() ? null : loaiSanPhamService.findById(idLoaiSanPham).get());
-        sanPhamEntity.setThuongHieuEntity(thuongHieuService.getThuongHieuById(idLoaiSanPham).isEmpty() ? null : thuongHieuService.getThuongHieuById(idLoaiSanPham).get());
+        sanPhamEntity.setThuongHieuEntity(thuongHieuService.getThuongHieuById(idThuongHieu).isEmpty() ? null : thuongHieuService.getThuongHieuById(idThuongHieu).get());
 //        sanPhamEntity.setNgayCapNhap(new java.sql.Date(System.currentTimeMillis()));
 
         return sanPhamRepository.save(sanPhamEntity);

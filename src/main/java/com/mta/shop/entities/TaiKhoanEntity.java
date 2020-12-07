@@ -16,7 +16,7 @@ public class TaiKhoanEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
     @Column(name = "TENDANGNHAP")
     private String tenDangNhap;
@@ -30,6 +30,10 @@ public class TaiKhoanEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taiKhoanEntity")
     @JsonBackReference
     private List<KhachHangEntity> khachHangEntity;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taiKhoanEntity")
+    @JsonIgnore
+    private List<NhanVienEntity> nhanVienEntities;
 
     public TaiKhoanEntity(){
     }

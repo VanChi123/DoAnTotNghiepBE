@@ -1,12 +1,12 @@
 package com.mta.shop.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -29,7 +29,15 @@ public class NhanVienEntity {
     @Column(name = "SODIENTHOAI")
     private String soDienThoai;
 
-    @Column(name = "IDTAIKHOAN")
-    private Integer idTaiKhoan;
+//    @Column(name = "IDTAIKHOAN")
+//    private Integer idTaiKhoan;
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "IDTAIKHOAN", insertable = true, updatable = true, nullable=true)
+    private TaiKhoanEntity taiKhoanEntity;
+
+    @OneToMany(mappedBy = "nhaCungCap", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @JsonBackReference
+    private Collection<PhieuNhap> phieuNhaps;
 
 }

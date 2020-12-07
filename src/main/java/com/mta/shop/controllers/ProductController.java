@@ -36,6 +36,19 @@ public class ProductController {
         return appResponse;
     }
 
+    // lấy tất cả dto : làm danh mục
+    @GetMapping(value = "/dto")
+    public AppResponse getAllProductDTO(){
+        AppResponse appResponse;
+
+        List<SanPhamDTO> list = sanPhamService.getAllDTO();
+
+        appResponse = new AppResponseSuccess();
+        appResponse.setData(list);
+        return appResponse;
+    }
+
+
 //    @GetMapping(value = "/get-all")
 //    public List<SanPhamEntity> getProductAll() {
 //        return sanPhamRepositoryCustomImp.findAllLoaiSanPham();
@@ -56,7 +69,7 @@ public class ProductController {
     public AppResponse getProductPaging(@RequestBody ProductAdminPagingRequest productPaging) {
         System.out.println("nhận body: " + productPaging.toString());
         AppResponse appResponse;
-        // Page<SanPhamEntity> list = sanPhamRepositoryCustomImp.findProductsPaging(productPaging.getPageNumber(), productPaging.getPageSize());
+
         Page<SanPhamDTO> list = sanPhamService.searchAdminPaging(productPaging).map(e -> {
             try {
                 return new SanPhamDTO(e, sanPhamService.getImgBase64(e.getAnhDaiDien()), "");

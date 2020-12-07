@@ -1,5 +1,6 @@
 package com.mta.shop.service.utils;
 
+import antlr.StringUtils;
 import com.mta.shop.configure.Constant;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
@@ -59,21 +60,22 @@ public class FileService {
     }
 
     public String getFile(String filePath) throws IOException {
-        try {
-            File file = new File(filePath.replaceAll(" ", ""));
-            //String imgBase64 = "";
-//            if (file.canRead()) {
+        System.out.println("file patch" + filePath);
+        if("".equals(filePath)||null==filePath) {
+            return  "";
+        } else {
+            try {
+                File file = new File(filePath.replaceAll(" ", ""));
 
-            byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
-            String imgBase64 = Base64.getEncoder().encodeToString(fileContent);
-//
-//            }
+                byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
+                String imgBase64 = Base64.getEncoder().encodeToString(fileContent);
 
-            return imgBase64;
-        } catch (IOException e) {
-            return "";
-            // throw e;
+                return imgBase64;
+            } catch (IOException e) {
+                return "";
+            }
         }
+
     }
 
     public void makeDirectoryIfNotExist() {

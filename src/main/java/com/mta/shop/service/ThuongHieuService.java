@@ -17,6 +17,10 @@ public class ThuongHieuService {
         return thuongHieuRepository.findAll();
     }
 
+    public List<Integer> getAllId(){
+        return thuongHieuRepository.getAllId();
+    }
+
     public ThuongHieuEntity addThuongHieu(ThuongHieuEntity thuongHieuEntity){
         return thuongHieuRepository.save(thuongHieuEntity);
     }

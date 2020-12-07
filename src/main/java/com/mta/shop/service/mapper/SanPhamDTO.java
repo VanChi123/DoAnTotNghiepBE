@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,21 +14,10 @@ public class SanPhamDTO {
     private Integer id;
     private String maSanPham;
     private String tenSanPham;
-    private Float gia;
-//    private String doiTuongSuDung;
-//    private Float kichThuocBeMat;
-//    private String chatLieuMatKinh;
-//    private String chatLieuDay;
-//    private Float doDay;
-//    private Float doDai;
-//    private Float doRongCuaDay;
-//    private String kieuKhoa;
-//    private String chatLieuVoMay;
-//    private String may;
-//    private String khaNangChiuNuoc;
     private Integer giamGia;
-    private String img;
-    private Date ngayCapNhap;
+
+    private String anhDaiDien;
+    private Float gia;
 
     private String imgBase64;
     private String fileTail;
@@ -40,39 +27,31 @@ public class SanPhamDTO {
     private Star star;
 
     private Collection<BinhLuan> binhLuans;
-//    private Collection<Favorite> favorites;
     private Collection<TaiKhoanEntity> taiKhoanEntities;
 
     public SanPhamDTO(SanPhamEntity sanPhamEntity, String imgBase64, String fileTail ){
         this.id = sanPhamEntity.getId();
         this.maSanPham = sanPhamEntity.getMaSanPham();
         this.tenSanPham = sanPhamEntity.getTenSanPham();
-        this.gia = sanPhamEntity.getGia();
-//        this.doiTuongSuDung = sanPhamEntity.getDoiTuongSuDung();
-//        this.kichThuocBeMat = sanPhamEntity.getKichThuocBeMat();
-//        this.chatLieuMatKinh = sanPhamEntity.getChatLieuMatKinh();
-//        this.chatLieuDay = sanPhamEntity.getChatLieuDay();
-//        this.doDay = sanPhamEntity.getDoDay();
-//        this.doDai = sanPhamEntity.getDoDai();
-//        this.doRongCuaDay = sanPhamEntity.getDoRongCuaDay();
-//        this.kieuKhoa = sanPhamEntity.getKieuKhoa();
-//        this.chatLieuVoMay = sanPhamEntity.getChatLieuVoMay();
-//        this.may = sanPhamEntity.getMay();
-//        this.khaNangChiuNuoc = sanPhamEntity.getKhaNangChiuNuoc();
         this.giamGia = sanPhamEntity.getGiamGia();
-        this.img = sanPhamEntity.getAnhDaiDien();
-      //  this.ngayCapNhap = sanPhamEntity.getNgayCapNhap();
+
+        this.anhDaiDien = sanPhamEntity.getAnhDaiDien();
+        this.gia = sanPhamEntity.getGia();
 
         this.thuongHieuEntity = sanPhamEntity.getThuongHieuEntity();
         this.loaiSanPham = sanPhamEntity.getLoaiSanPham();
         this.star = sanPhamEntity.getStar();
 
         this.binhLuans = sanPhamEntity.getBinhLuans();
-        // this.favorites = sanPhamEntity.getFavorites();
-
         this.taiKhoanEntities = sanPhamEntity.getTaiKhoanEntities();
 
         this.imgBase64 = imgBase64;
         this.fileTail = fileTail;
+    }
+
+    // lấy sản phẩm để làm danh mục
+    public SanPhamDTO(SanPhamEntity sanPhamEntity){
+        this.id = sanPhamEntity.getId();
+        this.tenSanPham = sanPhamEntity.getTenSanPham();
     }
 }
