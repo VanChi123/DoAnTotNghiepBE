@@ -29,6 +29,10 @@ public class NhanVienService {
         return nhanVienRepository.findById(id);
     }
 
+    public NhanVienEntity findByIdTaiKhoan(Integer id){
+        return nhanVienRepository.findByIdTaiKhoan(id);
+    }
+
     public NhanVienEntity findOneByIdTaiKhoan(Integer id){
         return nhanVienRepository.findByIdTaiKhoan(id);
     }

@@ -8,8 +8,9 @@ import java.sql.Timestamp;
 public class HoaDonPaymentRequest {
     private Integer idNhanVien;
 
-    private int idHoaDon;
+
     private Integer trangThai;
-    private Integer hinhThucThanhToan;
-    private Float soTienDaTra;
+//    private Integer hinhThucThanhToan;
+//    private Float soTienDaTra;
+    private int idHoaDon;
 }

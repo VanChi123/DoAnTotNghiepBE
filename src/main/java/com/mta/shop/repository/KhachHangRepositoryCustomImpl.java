@@ -23,7 +23,6 @@ public class KhachHangRepositoryCustomImpl implements KhachHangRepositoryCustom 
         if (taiKhoanEntity.isEmpty()){ // !ispresent = isempty
             return  null;
         }
-        // return khachHangRepository.findByIdTaiKhoan(taiKhoanEntity.get().getId());
-        return null;
+        return khachHangRepository.findByIdTaiKhoan(taiKhoanEntity.get().getId());
     }
 }

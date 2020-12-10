@@ -41,8 +41,7 @@ public class UserService {
         if (-1 != rand_int1) {
             // fetch user e-mail from database
             List<String> recipients = new ArrayList<>();
-            //recipients.add(user.get().getEmail());
-            recipients.add("chibuivan97@gmail.com");
+            recipients.add(request.getEmail());
             // generate emailDTO object
 //                EmailDto emailDTO = new EmailDto();
 //                emailDTO.setSubject("WebOnThi - Thi trắc nghiệm trực tuyến miễn phí 2020");
@@ -59,7 +58,7 @@ public class UserService {
                     "            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#ffffff\" style=\"max-width: 650px; margin: auto;\">\n" +
                     "            <tr>\n" +
                     "                <td colspan=\"2\" align=\"center\" style=\"background-color: #f3f8fd; padding: 40px;\">\n" +
-                    "                    <a href=\"http://cwatch.com/\" target=\"_blank\"><img src=\"https://hoctot.com/images/logo.png\" border=\"0\" /></a>\n" +
+                    "                    <a href=\"http://cwatch.com/\" target=\"_blank\"><img src=\"https://drive.google.com/file/d/1pgsdvc6A-QhbSPKKu1QBNhFbTxenkqNr/view?usp=sharing\" border=\"0\" /></a>\n" +
                     "                </td>\n" +
                     "            </tr>\n" +
                     "            <tr>\n" +

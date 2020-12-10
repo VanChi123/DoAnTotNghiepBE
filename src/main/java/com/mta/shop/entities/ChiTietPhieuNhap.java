@@ -16,8 +16,6 @@ public class ChiTietPhieuNhap {
         @EmbeddedId
         private ChiTietPhieuNhapPK chiTietPhieuNhapPK;
 
-
-
         @Column(name = "SOLUONGNHAP")
         private Integer soLuongNhap;
 

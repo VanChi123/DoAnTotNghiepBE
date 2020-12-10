@@ -34,6 +34,7 @@ public class UserController {
         return appResponse;
     }
 
+    // api gọi khi khachsh àng đăng ký hoặc đổi mật khẩu cho tài khoản
     @PostMapping("/forgot-password")
     public AppResponse forgotPassword(@RequestBody GetOTPRequest request) throws MessagingException {
         GetOTPResponse response = userService.generateOtp(request, "doi mat khau");

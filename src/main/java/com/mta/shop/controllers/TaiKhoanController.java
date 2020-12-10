@@ -41,11 +41,12 @@ public class TaiKhoanController {
         return appResponse;
     }
 
-    // thêm mới tài khoản
+    // thêm mới tài khoản cho khách hàng
     @PostMapping("/add")
     public AppResponse forgotPassword(@RequestBody AddAccountRequest request) throws MessagingException {
         System.out.println("request:" + request);
         TaiKhoanEntity taiKhoanEntity;
+        // nếu request gửi lên có type là khách hàng
         if (request.getTypeAccount().equals("customer")) {
             taiKhoanEntity = taiKhoanRepositoryCustom.addCustomer(new TaiKhoanEntity(request.getUserName(), request.getPassword(), request.getEmail()));
         } else {

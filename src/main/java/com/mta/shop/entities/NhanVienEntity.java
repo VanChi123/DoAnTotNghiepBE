@@ -1,6 +1,7 @@
 package com.mta.shop.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,9 @@ public class NhanVienEntity {
     @OneToMany(mappedBy = "nhaCungCap", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
     @JsonBackReference
     private Collection<PhieuNhap> phieuNhaps;
+
+    @OneToMany(mappedBy = "nhanVienEntity", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    @JsonIgnore
+    private Collection<HoaDon> hoaDons;
 
 }

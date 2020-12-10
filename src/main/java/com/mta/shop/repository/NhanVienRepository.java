@@ -16,4 +16,5 @@ public interface NhanVienRepository extends JpaRepository<NhanVienEntity, Intege
 
     @Query(value = "select nv from NhanVienEntity nv where nv.taiKhoanEntity.id = :id")
     public NhanVienEntity findByIdTaiKhoan(@Param("id") Integer id);
+
 }

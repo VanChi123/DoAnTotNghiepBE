@@ -2,9 +2,9 @@ package com.mta.shop.configure;
 
 public @interface Constant {
 
-    String WEB_MAIL = "noreply.webonthi@gmail.com";
+    String WEB_MAIL = "cwatchshop6868@gmail.com";
 //    String WEB_MAIL = "chishopwatch@gmail.com";
-    String WEB_MAIL_PASS = "at14kmateam";
+    String WEB_MAIL_PASS = "buivanchichuot5";
     String OTP_CHANGE_PASSWORD = "THAY ĐỔI MẬT KHẨU";
     String OTP_LOGIN = "ĐĂNG NHẬP TÀI KHOẢN";
     String LOGIN = "LOGIN";
